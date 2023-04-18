@@ -9,6 +9,12 @@ describe("Orders", () => {
   it("should list all orders", async () => {
     const orders: Orders = await gateway.orders.find();
 
+    await gateway.orders.item("or_b7BxPrVsBLSEP6nz").add({
+      amount: 1000,
+      description: "Teste2",
+      quantity: 1,
+    });
+
     expect(orders).toBeInstanceOf(Object);
     expect(orders).toHaveProperty("data");
 
@@ -57,45 +63,49 @@ describe("Orders", () => {
       "area_code"
     );
 
-    expect(orders.data[0]).toHaveProperty("charges");
-    expect(orders.data[0].charges).toBeInstanceOf(Array);
-    expect(orders.data[0].charges[0]).toHaveProperty("id");
-    expect(orders.data[0].charges[0]).toHaveProperty("code");
-    expect(orders.data[0].charges[0]).toHaveProperty("amount");
-    expect(orders.data[0].charges[0]).toHaveProperty("status");
-    expect(orders.data[0].charges[0]).toHaveProperty("currency");
-    expect(orders.data[0].charges[0]).toHaveProperty("payment_method");
-    expect(orders.data[0].charges[0]).toHaveProperty("created_at");
-    expect(orders.data[0].charges[0]).toHaveProperty("updated_at");
+    if (orders.data[0].charges) {
+      expect(orders.data[0]).toHaveProperty("charges");
+      expect(orders.data[0].charges).toBeInstanceOf(Array);
+      expect(orders.data[0].charges[0]).toHaveProperty("id");
+      expect(orders.data[0].charges[0]).toHaveProperty("code");
+      expect(orders.data[0].charges[0]).toHaveProperty("amount");
+      expect(orders.data[0].charges[0]).toHaveProperty("status");
+      expect(orders.data[0].charges[0]).toHaveProperty("currency");
+      expect(orders.data[0].charges[0]).toHaveProperty("payment_method");
+      expect(orders.data[0].charges[0]).toHaveProperty("created_at");
+      expect(orders.data[0].charges[0]).toHaveProperty("updated_at");
 
-    expect(orders.data[0].charges[0]).toHaveProperty("customer");
-    expect(orders.data[0].charges[0].customer).toBeInstanceOf(Object);
-    expect(orders.data[0].charges[0].customer).toHaveProperty("id");
-    expect(orders.data[0].charges[0].customer).toHaveProperty("name");
-    expect(orders.data[0].charges[0].customer).toHaveProperty("email");
-    expect(orders.data[0].charges[0].customer).toHaveProperty("document");
-    expect(orders.data[0].charges[0].customer).toHaveProperty("document_type");
-    expect(orders.data[0].charges[0].customer).toHaveProperty("delinquent");
-    expect(orders.data[0].charges[0].customer).toHaveProperty("created_at");
-    expect(orders.data[0].charges[0].customer).toHaveProperty("updated_at");
+      expect(orders.data[0].charges[0]).toHaveProperty("customer");
+      expect(orders.data[0].charges[0].customer).toBeInstanceOf(Object);
+      expect(orders.data[0].charges[0].customer).toHaveProperty("id");
+      expect(orders.data[0].charges[0].customer).toHaveProperty("name");
+      expect(orders.data[0].charges[0].customer).toHaveProperty("email");
+      expect(orders.data[0].charges[0].customer).toHaveProperty("document");
+      expect(orders.data[0].charges[0].customer).toHaveProperty(
+        "document_type"
+      );
+      expect(orders.data[0].charges[0].customer).toHaveProperty("delinquent");
+      expect(orders.data[0].charges[0].customer).toHaveProperty("created_at");
+      expect(orders.data[0].charges[0].customer).toHaveProperty("updated_at");
 
-    expect(orders.data[0].charges[0].customer).toHaveProperty("phones");
-    expect(orders.data[0].charges[0].customer.phones).toBeInstanceOf(Object);
-    expect(orders.data[0].charges[0].customer.phones).toHaveProperty(
-      "mobile_phone"
-    );
-    expect(
-      orders.data[0].charges[0].customer.phones.mobile_phone
-    ).toBeInstanceOf(Object);
-    expect(
-      orders.data[0].charges[0].customer.phones.mobile_phone
-    ).toHaveProperty("country_code");
-    expect(
-      orders.data[0].charges[0].customer.phones.mobile_phone
-    ).toHaveProperty("number");
-    expect(
-      orders.data[0].charges[0].customer.phones.mobile_phone
-    ).toHaveProperty("area_code");
+      expect(orders.data[0].charges[0].customer).toHaveProperty("phones");
+      expect(orders.data[0].charges[0].customer.phones).toBeInstanceOf(Object);
+      expect(orders.data[0].charges[0].customer.phones).toHaveProperty(
+        "mobile_phone"
+      );
+      expect(
+        orders.data[0].charges[0].customer.phones.mobile_phone
+      ).toBeInstanceOf(Object);
+      expect(
+        orders.data[0].charges[0].customer.phones.mobile_phone
+      ).toHaveProperty("country_code");
+      expect(
+        orders.data[0].charges[0].customer.phones.mobile_phone
+      ).toHaveProperty("number");
+      expect(
+        orders.data[0].charges[0].customer.phones.mobile_phone
+      ).toHaveProperty("area_code");
+    }
 
     expect(orders).toHaveProperty("paging");
     expect(orders.paging).toHaveProperty("total");

@@ -1,9 +1,23 @@
 import { AxiosInstance } from "axios";
+import { Item } from "./item";
 import { AddCharge } from "./types/addCharge";
 import { CreateOrder } from "./types/create";
 import { Find } from "./types/find";
 
-export class Order {
+interface IOrder {
+  find(param?: Find): Promise<any>;
+  create(body: CreateOrder): Promise<any>;
+  close(
+    order_id: string,
+    body: {
+      status: "paid" | "canceled" | "failed";
+    }
+  ): Promise<any>;
+  addCharge(body: AddCharge): Promise<any>;
+  item(order_id: string): Item;
+}
+
+export class Order implements IOrder {
   private readonly api: AxiosInstance;
 
   constructor(api: AxiosInstance) {
@@ -68,4 +82,8 @@ export class Order {
       return error;
     }
   }
+
+  public item = (order_id: string): Item => {
+    return new Item(this.api, order_id);
+  };
 }
