@@ -9,12 +9,6 @@ describe("Orders", () => {
   it("should list all orders", async () => {
     const orders: Orders = await gateway.orders.find();
 
-    await gateway.orders.item("or_b7BxPrVsBLSEP6nz").add({
-      amount: 1000,
-      description: "Teste2",
-      quantity: 1,
-    });
-
     expect(orders).toBeInstanceOf(Object);
     expect(orders).toHaveProperty("data");
 

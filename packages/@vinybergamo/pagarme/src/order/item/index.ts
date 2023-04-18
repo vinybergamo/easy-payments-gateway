@@ -1,9 +1,10 @@
 import { AxiosInstance } from "axios";
 import { AddItemRequest } from "./types/request";
-import { AddItemReponse } from "./types/response";
+import { AddItemReponse, RemoveItemResponse } from "./types/response";
 
 interface IItem {
   add(body: AddItemRequest): Promise<AddItemReponse>;
+  remove(item_id: string): Promise<RemoveItemResponse>;
 }
 
 export class Item implements IItem {
@@ -20,6 +21,17 @@ export class Item implements IItem {
       const { data } = await this.api.post(
         `/orders/${this.order_id}/items`,
         body
+      );
+      return data;
+    } catch (error: any) {
+      return error;
+    }
+  }
+
+  public async remove(item_id: string): Promise<RemoveItemResponse> {
+    try {
+      const { data } = await this.api.delete(
+        `/orders/${this.order_id}/items/${item_id}`
       );
       return data;
     } catch (error: any) {
