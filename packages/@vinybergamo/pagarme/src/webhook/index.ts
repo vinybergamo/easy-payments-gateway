@@ -1,13 +1,24 @@
 import { AxiosInstance } from "axios";
 
-class webhook {
+interface Webhook {
+  find(hook_id?: string): Promise<{
+    [key: string]: any;
+  }>;
+  send(hook_id: string): Promise<{
+    [key: string]: any;
+  }>;
+}
+
+class webhook implements Webhook {
   private readonly api: AxiosInstance;
 
   constructor(api: AxiosInstance) {
     this.api = api;
   }
 
-  public async find(hook_id?: string): Promise<Object> {
+  public async find(hook_id?: string): Promise<{
+    [key: string]: any;
+  }> {
     if (hook_id) {
       try {
         const { data } = await this.api.get(`/hooks/${hook_id}`);
