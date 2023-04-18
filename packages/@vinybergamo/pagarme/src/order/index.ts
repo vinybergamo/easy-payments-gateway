@@ -4,7 +4,7 @@ import { AddCharge } from "./types/addCharge";
 import { CreateOrder } from "./types/create";
 import { Find } from "./types/find";
 
-interface IOrder {
+interface Order {
   find(param?: Find): Promise<any>;
   create(body: CreateOrder): Promise<any>;
   close(
@@ -17,7 +17,7 @@ interface IOrder {
   item(order_id: string): Item;
 }
 
-export class Order implements IOrder {
+class order implements Order {
   private readonly api: AxiosInstance;
 
   constructor(api: AxiosInstance) {
@@ -87,3 +87,5 @@ export class Order implements IOrder {
     return new Item(this.api, order_id);
   };
 }
+
+export { order as Order };

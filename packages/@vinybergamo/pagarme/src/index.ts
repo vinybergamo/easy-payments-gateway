@@ -9,12 +9,12 @@ interface Client {
   password?: string;
 }
 
-interface IPagarme {
+interface Pagarme {
   orders: Order;
   webhooks: Webhook;
 }
 
-export class Pagarme implements IPagarme {
+class pagarme implements Pagarme {
   private readonly api: AxiosInstance;
   public readonly orders: Order;
   public readonly webhooks: Webhook;
@@ -41,3 +41,5 @@ export class Pagarme implements IPagarme {
     this.webhooks = new Webhook(this.api);
   }
 }
+
+export { pagarme as Pagarme };

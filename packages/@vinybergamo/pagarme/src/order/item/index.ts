@@ -2,12 +2,12 @@ import { AxiosInstance } from "axios";
 import { AddItemRequest } from "./types/request";
 import { AddItemReponse, RemoveItemResponse } from "./types/response";
 
-interface IItem {
+interface Item {
   add(body: AddItemRequest): Promise<AddItemReponse>;
   remove(item_id: string): Promise<RemoveItemResponse>;
 }
 
-export class Item implements IItem {
+class item implements Item {
   constructor(
     private readonly api: AxiosInstance,
     private readonly order_id: string
@@ -39,3 +39,5 @@ export class Item implements IItem {
     }
   }
 }
+
+export { item as Item };

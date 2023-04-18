@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 
-export class Webhook {
+class webhook {
   private readonly api: AxiosInstance;
 
   constructor(api: AxiosInstance) {
@@ -36,3 +36,5 @@ export class Webhook {
     }
   }
 }
+
+export { webhook as Webhook };
