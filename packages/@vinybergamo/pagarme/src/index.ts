@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { Order } from "./order";
 import { Webhook } from "./webhook";
+import { Subscription } from "./subscription";
 
 interface Client {
   secret_key: string;
@@ -12,12 +13,14 @@ interface Client {
 interface Pagarme {
   orders: Order;
   webhooks: Webhook;
+  subscription: Subscription;
 }
 
 class pagarme implements Pagarme {
   private readonly api: AxiosInstance;
   public readonly orders: Order;
   public readonly webhooks: Webhook;
+  public readonly subscription: Subscription;
 
   constructor(private readonly client: Client) {
     this.client = client;
@@ -39,6 +42,7 @@ class pagarme implements Pagarme {
 
     this.orders = new Order(this.api);
     this.webhooks = new Webhook(this.api);
+    this.subscription = new Subscription(this.api);
   }
 }
 
