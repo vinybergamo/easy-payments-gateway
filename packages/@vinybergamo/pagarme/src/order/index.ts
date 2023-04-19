@@ -1,12 +1,11 @@
 import { AxiosInstance } from "axios";
 import { Item } from "./item";
 import { AddCharge } from "./types/addCharge";
-import { CreateOrder } from "./types/create";
 import { Find } from "./types/find";
 
 interface Order {
   find(param?: Find): Promise<any>;
-  create(body: CreateOrder): Promise<any>;
+  create(body: any): Promise<any>;
   close(
     order_id: string,
     body: {
@@ -51,7 +50,7 @@ class order implements Order {
     }
   }
 
-  public async create(body: CreateOrder): Promise<any> {
+  public async create(body: any): Promise<any> {
     try {
       const { data } = await this.api.post("/orders", body);
       return data;
