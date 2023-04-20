@@ -47,7 +47,3 @@ class pagarme implements Pagarme {
 }
 
 export { pagarme as Pagarme };
-
-const teste = new pagarme({
-  secret_key: "sk_test_xoNzoq0He6i5D5Or",
-});

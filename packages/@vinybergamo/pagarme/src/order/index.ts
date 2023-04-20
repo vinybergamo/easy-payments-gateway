@@ -9,7 +9,7 @@ import {
   OrderResponse,
   OrdersResponse,
 } from "./types/response";
-import { CloseRequest } from "./types/request";
+import { CloseRequest, CreateRequest } from "./types/request";
 
 interface Order {
   find: {
@@ -64,7 +64,7 @@ class order implements Order {
     };
   }
 
-  public async create<T = CreateResponse>(body: T): Promise<T> {
+  public async create<T = CreateResponse>(body: CreateRequest): Promise<T> {
     try {
       const { data } = await this.api.post<T>("/orders", body);
       return data;
