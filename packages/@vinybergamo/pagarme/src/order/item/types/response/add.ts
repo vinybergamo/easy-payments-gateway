@@ -32,4 +32,4 @@ interface AddItem {
   order: Order;
 }
 
-export type RemoveItemResponse = AddItem | undefined;
+export type AddItemResponse = AddItem | undefined;

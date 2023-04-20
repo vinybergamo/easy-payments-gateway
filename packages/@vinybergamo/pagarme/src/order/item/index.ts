@@ -1,9 +1,9 @@
 import { AxiosInstance } from "axios";
 import { AddItemRequest } from "./types/request";
-import { AddItemReponse, RemoveItemResponse } from "./types/response";
+import { AddItemResponse, RemoveItemResponse } from "./types/response";
 
 interface Item {
-  add<T = AddItemRequest>(body: AddItemRequest): Promise<T>;
+  add<T = AddItemResponse>(body: AddItemRequest): Promise<T>;
   remove<T = RemoveItemResponse>(item_id: string): Promise<T>;
 }
 
@@ -16,7 +16,7 @@ class item implements Item {
     this.order_id = order_id;
   }
 
-  public async add<T = AddItemReponse>(body: AddItemRequest): Promise<T> {
+  public async add<T = AddItemResponse>(body: AddItemRequest): Promise<T> {
     try {
       const { data } = await this.api.post<T>(
         `/orders/${this.order_id}/items`,
