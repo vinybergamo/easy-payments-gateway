@@ -19,6 +19,8 @@
     "packages/@vinybergamo/*"
   ],
   "dependencies": {
-    "@vinybergamo/pagarme": "workspace:^"
+    "@vinybergamo/pagarme": "workspace:^",
+    "global": "^4.4.0",
+    "ts-node": "^10.9.1"
   }
 }

@@ -8,4 +8,4 @@ interface FindParams {
   size?: number;
 }
 
-export type Find = string | FindParams;
+export type Find = FindParams;

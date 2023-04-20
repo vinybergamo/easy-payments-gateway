@@ -112,7 +112,7 @@ interface Charge {
   checkouts?: Array<any>;
 }
 
-export interface Order {
+interface Order {
   id: string;
   code: string;
   status: string;
@@ -126,3 +126,5 @@ export interface Order {
   closed_at: string;
   charges: Array<Charge>;
 }
+
+export type OrderResponse = Order | undefined;

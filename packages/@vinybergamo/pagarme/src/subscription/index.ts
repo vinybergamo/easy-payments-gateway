@@ -1,9 +1,10 @@
 import { AxiosInstance } from "axios";
 import { LooseRequest } from "./types/request/create";
+import { LooseResponse } from "./types/response/create";
 
 interface Subscription {
   create: {
-    loose: (body: LooseRequest) => Promise<any>;
+    loose: <T = LooseResponse>(body: LooseRequest) => Promise<T>;
   };
 }
 
@@ -15,9 +16,9 @@ class subscription implements Subscription {
   }
 
   public get create() {
-    const loose = async (body: LooseRequest) => {
+    const loose = async <T = LooseResponse>(body: LooseRequest): Promise<T> => {
       try {
-        const { data } = await this.api.post("/subscriptions", body);
+        const { data } = await this.api.post<T>("/subscriptions", body);
         return data;
       } catch (error: any) {
         return error.response.data;

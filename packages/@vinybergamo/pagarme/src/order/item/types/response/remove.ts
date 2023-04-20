@@ -20,7 +20,7 @@ interface Order {
   items: Array<Item>;
 }
 
-export interface RemoveItemResponse {
+interface RemoveItem {
   id: string;
   type: string;
   description: string;
@@ -30,3 +30,4 @@ export interface RemoveItemResponse {
   updated_at: string;
   deleted_at: string;
 }
+export type RemoveItemResponse = RemoveItem | undefined;

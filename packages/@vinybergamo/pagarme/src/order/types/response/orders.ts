@@ -48,7 +48,7 @@ interface Charge {
   customer: Customer;
 }
 
-export interface Orders {
+interface Orders {
   data: Array<{
     id: string;
     code: string;
@@ -68,3 +68,5 @@ export interface Orders {
     next: string;
   };
 }
+
+export type OrdersResponse = Orders | undefined;

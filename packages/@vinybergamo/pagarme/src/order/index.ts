@@ -2,17 +2,23 @@ import { AxiosInstance } from "axios";
 import { Item } from "./item";
 import { AddCharge } from "./types/addCharge";
 import { Find } from "./types/find";
+import {
+  AddChargeResponse,
+  CloseResponse,
+  CreateResponse,
+  OrderResponse,
+  OrdersResponse,
+} from "./types/response";
+import { CloseRequest } from "./types/request";
 
 interface Order {
-  find(param?: Find): Promise<any>;
-  create(body: any): Promise<any>;
-  close(
-    order_id: string,
-    body: {
-      status: "paid" | "canceled" | "failed";
-    }
-  ): Promise<any>;
-  addCharge(body: AddCharge): Promise<any>;
+  find: {
+    one<T = OrderResponse>(order_id: string): Promise<T>;
+    all<T = OrdersResponse>(param?: Find): Promise<T>;
+  };
+  create<T = CreateResponse>(body: any): Promise<T>;
+  close<T = CloseResponse>(order_id: string, body: CloseRequest): Promise<T>;
+  addCharge<T = AddChargeResponse>(body: AddCharge): Promise<T>;
   item(order_id: string): Item;
 }
 
@@ -23,68 +29,77 @@ class order implements Order {
     this.api = api;
   }
 
-  public async find(param?: Find): Promise<any> {
-    if (typeof param === "string")
+  public get find() {
+    const one = async <T = OrderResponse>(order_id: string): Promise<T> => {
       try {
-        const { data } = await this.api.get(`/orders/${param}`);
+        const { data } = await this.api.get<T>(`/orders/${order_id}`);
         return data;
       } catch (error: any) {
-        return error;
+        return error.response.data;
       }
+    };
 
-    if (typeof param === "object")
+    const all = async <T = OrdersResponse>(param?: Find): Promise<T> => {
+      if (typeof param === "object")
+        try {
+          const { data } = await this.api.get<T>("/orders", {
+            params: param,
+          });
+          return data;
+        } catch (error: any) {
+          return error.response.data;
+        }
+
       try {
-        const { data } = await this.api.get("/orders", {
-          params: param,
-        });
+        const { data } = await this.api.get<T>("/orders");
         return data;
       } catch (error: any) {
-        return error;
+        return error.response.data;
       }
+    };
 
+    return {
+      one,
+      all,
+    };
+  }
+
+  public async create<T = CreateResponse>(body: T): Promise<T> {
     try {
-      const { data } = await this.api.get("/orders");
+      const { data } = await this.api.post<T>("/orders", body);
       return data;
     } catch (error: any) {
-      return error;
+      return error.response.data;
     }
   }
 
-  public async create(body: any): Promise<any> {
-    try {
-      const { data } = await this.api.post("/orders", body);
-      return data;
-    } catch (error: any) {
-      return error;
-    }
-  }
-
-  public async close(
+  public async close<T = CloseResponse>(
     order_id: string,
-    body: {
-      status: "paid" | "canceled" | "failed";
-    }
-  ): Promise<any> {
+    body: CloseRequest
+  ): Promise<T> {
     try {
-      const { data } = await this.api.put(`/orders/${order_id}/closed`, body);
+      const { data } = await this.api.patch<T>(
+        `/orders/${order_id}/closed`,
+        body
+      );
       return data;
     } catch (error: any) {
-      return error;
+      return error.response.data;
     }
   }
 
-  public async addCharge(body: AddCharge): Promise<any> {
+  public async addCharge<T = AddChargeResponse>(body: AddCharge): Promise<T> {
     try {
-      const { data } = await this.api.post("/charges", body);
+      const { data } = await this.api.post<T>("/charges", body);
       return data;
     } catch (error: any) {
-      return error;
+      return error.response.data;
     }
   }
 
-  public item = (order_id: string): Item => {
+  public item(order_id: string): Item {
     return new Item(this.api, order_id);
-  };
+  }
 }
 
 export { order as Order };
