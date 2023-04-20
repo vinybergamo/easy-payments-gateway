@@ -47,3 +47,13 @@ class pagarme implements Pagarme {
 }
 
 export { pagarme as Pagarme };
+
+const orderId = "or_GlkY0pNf9DHz1J7N";
+const itemId = "oi_7A9jzKDtyTjWlqQV";
+
+new pagarme({
+  secret_key: process.env.PAGARME_SECRET_KEY_TEST!,
+}).orders
+  .item(orderId)
+  .get(itemId)
+  .then(order => console.log(order));
