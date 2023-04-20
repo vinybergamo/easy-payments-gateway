@@ -1,6 +1,5 @@
 import { AxiosInstance } from "axios";
 import { Item } from "./item";
-import { AddCharge } from "./types/addCharge";
 import { Find } from "./types/find";
 import {
   AddChargeResponse,
@@ -9,7 +8,7 @@ import {
   OrderResponse,
   OrdersResponse,
 } from "./types/response";
-import { CloseRequest, CreateRequest } from "./types/request";
+import { CloseRequest, CreateRequest, AddChargeRequest } from "./types/request";
 
 interface Order {
   find: {
@@ -18,7 +17,7 @@ interface Order {
   };
   create<T = CreateResponse>(body: any): Promise<T>;
   close<T = CloseResponse>(order_id: string, body: CloseRequest): Promise<T>;
-  addCharge<T = AddChargeResponse>(body: AddCharge): Promise<T>;
+  addCharge<T = AddChargeResponse>(body: AddChargeRequest): Promise<T>;
   item(order_id: string): Item;
 }
 
@@ -88,7 +87,9 @@ class order implements Order {
     }
   }
 
-  public async addCharge<T = AddChargeResponse>(body: AddCharge): Promise<T> {
+  public async addCharge<T = AddChargeResponse>(
+    body: AddChargeRequest
+  ): Promise<T> {
     try {
       const { data } = await this.api.post<T>("/charges", body);
       return data;
