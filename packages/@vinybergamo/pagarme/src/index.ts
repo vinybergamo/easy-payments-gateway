@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from "axios";
 import { Order } from "./order";
 import { Webhook } from "./webhook";
 import { Subscription } from "./subscription";
+import { Plans } from "./plans";
 
 interface Client {
   secret_key: string;
@@ -21,6 +22,7 @@ class pagarme implements Pagarme {
   public readonly orders: Order;
   public readonly webhooks: Webhook;
   public readonly subscription: Subscription;
+  public readonly plans: Plans;
 
   constructor(private readonly client: Client) {
     this.client = client;
@@ -43,7 +45,33 @@ class pagarme implements Pagarme {
     this.orders = new Order(this.api);
     this.webhooks = new Webhook(this.api);
     this.subscription = new Subscription(this.api);
+    this.plans = new Plans(this.api);
   }
 }
 
 export { pagarme as Pagarme };
+
+new pagarme({
+  secret_key: "sk_test_xoNzoq0He6i5D5Or",
+}).plans.create({
+  billing_type: "prepaid",
+  currency: "BRL",
+  installments: [1],
+  interval: "day",
+  name: "Testando Plano pela API",
+  payment_methods: ["boleto"],
+  items: [
+    {
+      name: "Item Plan Teste",
+      pricing_scheme: {
+        price: 1990,
+        scheme_type: "unit",
+      },
+      quantity: 1,
+    },
+  ],
+  pricing_scheme: {
+    price: 1990,
+    scheme_type: "unit",
+  },
+});

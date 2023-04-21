@@ -49,7 +49,7 @@ interface WithPlan {
     name: string;
     description: string;
     url: string;
-    interval: "day" | "month" | "year";
+    interval: "day" | "week" | "month" | "year";
     interval_count: number;
     billing_type: "prepaid" | "postpaid" | "exact_day";
     payment_methods: Array<"boleto" | "credit_card" | "debit_card">;
