@@ -1,1 +1,1 @@
-export { Loose as LooseResponse } from "./loose";
+export { LooseResponse } from "./loose";
