@@ -1,11 +1,11 @@
 import { AxiosInstance } from "axios";
 import { LooseRequest, WithPlanRequest } from "./types/request/create";
-import { LooseResponse } from "./types/response/create";
+import { LooseResponse, WithPlanResponse } from "./types/response/create";
 
 interface Subscription {
   create: {
     loose: <T = LooseResponse>(body: LooseRequest) => Promise<T>;
-    withPlan: <T = any>(body: WithPlanRequest) => Promise<T>;
+    withPlan: <T = WithPlanResponse>(body: WithPlanRequest) => Promise<T>;
   };
 }
 
@@ -26,7 +26,9 @@ class subscription implements Subscription {
       }
     };
 
-    const withPlan = async <T = any>(body: WithPlanRequest): Promise<T> => {
+    const withPlan = async <T = WithPlanResponse>(
+      body: WithPlanRequest
+    ): Promise<T> => {
       try {
         const { data } = await this.api.post<T>("/subscriptions", body);
         return data;
