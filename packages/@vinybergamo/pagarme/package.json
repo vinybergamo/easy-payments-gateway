@@ -1,7 +1,7 @@
 {
   "name": "@vinybergamo/pagarme",
-  "version": "1.0.3",
-  "description": "Library to connect with payments providers",
+  "version": "1.0.4",
+  "description": "Library to connect with pagarme gateway",
   "publishConfig": {
     "access": "public"
   },
@@ -14,7 +14,7 @@
   "repository": {
     "type": "git",
     "directory": "pagarme",
-    "url": "https://github.com/vinybergamo/pagarme.git"
+    "url": "https://github.com/vinybergamo/easy-payments-gateway/tree/main/packages/%40vinybergamo/pagarme"
   },
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
