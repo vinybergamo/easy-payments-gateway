@@ -1,22 +1,19 @@
 import { AxiosInstance } from "axios";
 import { CreatePlanRequest } from "./types/request";
+import { CreatePlanResponse } from "./types/response";
 
 interface Plans {
-  create<T>(body: CreatePlanRequest): Promise<T>;
+  create<T = CreatePlanResponse>(body: CreatePlanRequest): Promise<T>;
 }
 
 class plans implements Plans {
   constructor(private readonly api: AxiosInstance) {}
 
-  async create<T>(body: CreatePlanRequest): Promise<T> {
+  async create<T = CreatePlanResponse>(body: CreatePlanRequest): Promise<T> {
     try {
       const { data } = await this.api.post<T>("/plans", body);
-      console.log(data);
-
       return data;
     } catch (error: any) {
-      console.log(error.response.data);
-
       return error.response.data;
     }
   }
