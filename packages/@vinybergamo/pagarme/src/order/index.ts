@@ -75,6 +75,7 @@ class order implements Order {
       "cash",
       "pix",
     ];
+
     function validateCustomer() {
       if (!body.customer.name) errors.push("customer.name is required");
 
