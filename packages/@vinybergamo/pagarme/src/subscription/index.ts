@@ -13,6 +13,7 @@ interface Subscription {
     all: <T = GetAllSubscriptionsResponse>(
       params?: GetAllSubscriptionsParams
     ) => Promise<T>;
+    one: <T = any>(subscription_id: string) => Promise<T>;
   };
 }
 
@@ -65,8 +66,20 @@ class subscription implements Subscription {
       }
     };
 
+    const one = async <T = any>(subscription_id: string): Promise<T> => {
+      try {
+        const { data } = await this.api.get<T>(
+          `/subscriptions/${subscription_id}`
+        );
+        return data;
+      } catch (error: any) {
+        return error.response.data;
+      }
+    };
+
     return {
       all,
+      one,
     };
   }
 }
