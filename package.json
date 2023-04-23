@@ -2,7 +2,7 @@
   "name": "easy-payments-gateway",
   "scripts": {
     "build": "turbo run build",
-    "build:pagarme": "yarn workspace @vinybergamo/pagarme install",
+    "build:pagarme": "cd packages/@vinybergamo/pagarme && yarn install",
     "test": "turbo run test",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
