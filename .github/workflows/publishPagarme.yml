@@ -3,6 +3,8 @@ name: Publish Package @vinybergamo/pagarme
 on:
   release:
     types: [created]
+    branches:
+      - pagarme
 
 jobs:
   build:
