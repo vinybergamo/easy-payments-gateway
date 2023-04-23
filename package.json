@@ -3,6 +3,7 @@
   "scripts": {
     "build": "turbo run build",
     "build:pagarme": "cd packages/@vinybergamo/pagarme && yarn install",
+    "publish:pagarme": "cd packages/@vinybergamo/pagarme && npm publish",
     "test": "turbo run test",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
