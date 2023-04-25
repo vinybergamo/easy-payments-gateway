@@ -3,7 +3,7 @@ import { Order } from "./order";
 import { Webhook } from "./webhook";
 import { Subscription } from "./subscription";
 import { Plans } from "./plans";
-import { Clients } from "./clients";
+import { Customers } from "./customers";
 
 interface Client {
   secret_key: string;
@@ -24,7 +24,7 @@ class pagarme implements Pagarme {
   public readonly webhooks: Webhook;
   public readonly subscription: Subscription;
   public readonly plans: Plans;
-  public readonly clients: Clients;
+  public readonly customers: Customers;
 
   constructor(private readonly client: Client) {
     if (!this.client.secret_key) throw new Error("Secret key is required");
@@ -46,7 +46,7 @@ class pagarme implements Pagarme {
     this.webhooks = new Webhook(this.api);
     this.subscription = new Subscription(this.api);
     this.plans = new Plans(this.api);
-    this.clients = new Clients(this.api);
+    this.customers = new Customers(this.api);
   }
 }
 

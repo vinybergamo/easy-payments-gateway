@@ -1,4 +1,4 @@
-interface GetAllClients {
+interface GetCustomersClients {
   name?: string;
   document?: string;
   email?: string;
@@ -8,4 +8,4 @@ interface GetAllClients {
   code?: string;
 }
 
-export type GetAllClientsRequest = GetAllClients;
+export type GetAllCustomersRequest = GetCustomersClients;

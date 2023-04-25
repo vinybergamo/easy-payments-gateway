@@ -1,19 +1,19 @@
 import { AxiosInstance } from "axios";
-import { GetAllClientsRequest } from "./types/request/find/all";
+import { GetAllCustomersRequest } from "./types/request/find/all";
 import { GetAllClientsResponse } from "./types/response/all";
 
-interface Clients {
+interface Customers {
   find: {
-    all<T = GetAllClientsResponse>(params?: GetAllClientsRequest): Promise<T>;
+    all<T = GetAllClientsResponse>(params?: GetAllCustomersRequest): Promise<T>;
   };
 }
 
-class clients implements Clients {
+class customers implements Customers {
   constructor(private readonly api: AxiosInstance) {}
 
   public get find() {
     const all = async <T = GetAllClientsResponse>(
-      params?: GetAllClientsRequest
+      params?: GetAllCustomersRequest
     ): Promise<T> => {
       try {
         const { data } = await this.api.get<T>("/customers", {
@@ -31,4 +31,4 @@ class clients implements Clients {
   }
 }
 
-export { clients as Clients };
+export { customers as Customers };
