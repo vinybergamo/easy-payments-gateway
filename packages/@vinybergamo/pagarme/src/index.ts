@@ -3,6 +3,7 @@ import { Order } from "./order";
 import { Webhook } from "./webhook";
 import { Subscription } from "./subscription";
 import { Plans } from "./plans";
+import { Clients } from "./clients";
 
 interface Client {
   secret_key: string;
@@ -23,10 +24,9 @@ class pagarme implements Pagarme {
   public readonly webhooks: Webhook;
   public readonly subscription: Subscription;
   public readonly plans: Plans;
+  public readonly clients: Clients;
 
   constructor(private readonly client: Client) {
-    this.client = client;
-
     if (!this.client.secret_key) throw new Error("Secret key is required");
 
     const base64Key = Buffer.from(
@@ -46,6 +46,7 @@ class pagarme implements Pagarme {
     this.webhooks = new Webhook(this.api);
     this.subscription = new Subscription(this.api);
     this.plans = new Plans(this.api);
+    this.clients = new Clients(this.api);
   }
 }
 
