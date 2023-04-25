@@ -1,10 +1,14 @@
 import { AxiosInstance } from "axios";
 import { GetAllCustomersRequest } from "./types/request/find/all";
-import { GetAllClientsResponse } from "./types/response/all";
+import {
+  GetAllClientsResponse,
+  GetOneCustomerResponse,
+} from "./types/response/find";
 
 interface Customers {
   find: {
     all<T = GetAllClientsResponse>(params?: GetAllCustomersRequest): Promise<T>;
+    one<T = GetOneCustomerResponse>(customer_id: string): Promise<T>;
   };
 }
 
@@ -25,8 +29,20 @@ class customers implements Customers {
       }
     };
 
+    const one = async <T = GetOneCustomerResponse>(
+      customer_id: string
+    ): Promise<T> => {
+      try {
+        const { data } = await this.api.get<T>(`/customers/${customer_id}`);
+        return data;
+      } catch (error: any) {
+        return error.response.data;
+      }
+    };
+
     return {
       all,
+      one,
     };
   }
 }
