@@ -4,12 +4,15 @@ import {
   GetAllClientsResponse,
   GetOneCustomerResponse,
 } from "./types/response/find";
+import { CreateCustomerRequest } from "./types/request";
+import { CreateCustomerResponse } from "./types/response";
 
 interface Customers {
   find: {
     all<T = GetAllClientsResponse>(params?: GetAllCustomersRequest): Promise<T>;
     one<T = GetOneCustomerResponse>(customer_id: string): Promise<T>;
   };
+  create<T = CreateCustomerResponse>(body: CreateCustomerRequest): Promise<T>;
 }
 
 class customers implements Customers {
@@ -44,6 +47,17 @@ class customers implements Customers {
       all,
       one,
     };
+  }
+
+  public async create<T = CreateCustomerResponse>(
+    body: CreateCustomerRequest
+  ): Promise<T> {
+    try {
+      const { data } = await this.api.post<T>("/customers", body);
+      return data;
+    } catch (error: any) {
+      return error.response.data;
+    }
   }
 }
 
