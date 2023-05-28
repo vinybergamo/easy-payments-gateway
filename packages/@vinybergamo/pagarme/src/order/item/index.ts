@@ -44,6 +44,17 @@ class item implements Item {
     }
   }
 
+  public async removeAll<T>(): Promise<T> {
+    try {
+      const { data } = await this.api.delete<T>(
+        `/orders/${this.order_id}/items`
+      );
+      return data;
+    } catch (error: any) {
+      return error.response.data;
+    }
+  }
+
   public async get<T = GetItemResponse>(item_id: string): Promise<T> {
     try {
       const { data } = await this.api.get<T>(
